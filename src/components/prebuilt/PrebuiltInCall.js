@@ -4,12 +4,12 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Events from "../Events";
-import InviteButton from "../Invite.js";
 import Participants from "../Participants";
 import ReadyRoomVideo from "./ReadyRoomVideo";
 
 import { useHistory, useLocation } from "react-router";
 import * as slack from "../../integrations/slack"
+import InviteForm from "../InviteForm";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -103,13 +103,7 @@ export default function InCall({
           <Events log={event} />
         </Col>
         <Col className="col">
-          <InviteButton
-            staticURL={window.location.href}
-            mod={true}
-            room={roomDetails.room}
-            roomName={roomDisplayName}
-            eventLogger={logEvent}
-          />
+          <InviteForm currentUser={roomDetails.user.name} />
           <Participants
             memberList={memberList}
             mod={true}

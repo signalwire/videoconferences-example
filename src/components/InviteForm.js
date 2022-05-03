@@ -4,61 +4,35 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import * as slack from "../integrations/slack"
 
-export default function JoinCallForm({
-  roomName,
-  onJoin = () => {},
-  mod = false,
-}) {
-  let [name, setName] = useState("");
-  let [joinAsGuest, setJoinAsGuest] = useState(false);
+export default function InviteForm({ currentUser }) {
+  const slackUsers = slack.useSlackUsers();
+  const [selectedUser, setSelectedUser] = useState(null)
+
   return (
-    <Container>
-      <Row className="justify-content-md-center">
-        <Col lg={4}>
-          <h4>
-            Join '{roomName}'{mod && !joinAsGuest ? " as moderator" : ""}
-          </h4>
-          <Form onSubmit={(e) => e.preventDefault()}>
-            <Form.Group className="mb-3" controlId="VideoCallName">
-              <Form.Label>Your Name</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Your Name"
-                onChange={(e) => setName(e.target.value)}
-                value={name}
-                pattern="[^' ']+"
-                required
-              />
-            </Form.Group>
-            {mod && (
-              <Form.Check
-                type="checkbox"
-                label="Please add me without moderator privileges"
-                checked={joinAsGuest}
-                onChange={(e) => {
-                  setJoinAsGuest(e.target.checked);
-                  console.log(e.target.checked);
-                }}
-              />
-            )}
-            <Button
-              className="mt-1"
-              variant="primary"
-              type="submit"
-              onClick={() => {
-                if (name !== "") {
-                  onJoin({ name, room: roomName, mod: mod && !joinAsGuest });
-                } else {
-                  alert("Please fill all fields");
-                }
-              }}
-            >
-              Join
-            </Button>
-          </Form>
-        </Col>
-      </Row>
-    </Container>
-  );
+    <Form onSubmit={(e) => e.preventDefault()}>
+      <Form.Group className="mb-3" controlId="VideoCallName">
+        <Form.Label>Invite someone</Form.Label>
+        <Form.Select
+          aria-label="User name"
+          value={selectedUser?.id}
+          onChange={(e) => setSelectedUser(slackUsers.find(u => u.id === e.target.value))}>
+          <option>Select a person</option>
+          {slackUsers.map(u => <option key={u.id} value={u.id}>{u.real_name}</option>)}
+        </Form.Select>
+      </Form.Group>
+      <Button
+        variant="primary"
+        type="submit"
+        disabled={!selectedUser}
+        onClick={async () => {
+          await slack.sendMessage(selectedUser.id, `${currentUser} invited you to join a call at ${window.location.origin}`)
+          setSelectedUser(null)
+        }}
+      >
+        Invite
+      </Button>
+    </Form>
+  )
 }

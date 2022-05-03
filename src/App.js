@@ -11,7 +11,6 @@ import {
 } from "react-router-dom";
 
 import JoinCallForm from "./components/JoinCallForm.js";
-import InviteForm from "./components/InviteForm";
 import Prebuilt from "./components/prebuilt/PrebuiltInCall.js";
 
 function useQuery() {
@@ -27,7 +26,7 @@ function App() {
     <>
       <Header />
       <Switch>
-        <Route path="/prebuilt">
+        <Route path="/videoconf">
           {!roomDetails.user || !roomDetails.room ? (
             <Redirect to="/" />
           ) : (
@@ -35,26 +34,13 @@ function App() {
           )}
         </Route>
 
-        <Route path="/invite">
-          <InviteForm
-            mod={query.get("m") === "mod"}
-            roomName={query.get("rn")}
-            onJoin={({ name, mod }) => {
-              let room = query.get("r");
-              console.log(name, room, mod);
-              setRoomDetails({ name, room, mod });
-              console.log(history);
-              history.push("/prebuilt");
-            }}
-          />
-        </Route>
         <Route path="/">
           <JoinCallForm
             onJoin={({ room, user }) => {
               console.log(user, room);
               setRoomDetails({ user, room, mod: true });
               console.log(history);
-              history.push("/prebuilt");
+              history.push("/videoconf");
             }}
           />
         </Route>

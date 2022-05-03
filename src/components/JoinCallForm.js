@@ -52,6 +52,7 @@ export default function JoinCallForm({ onJoin = () => {} }) {
               </Form.Select>
             </Form.Group>
 
+            {/*
             <Form.Group className="mb-3" controlId="VideoRoom">
               <Form.Label>Room Token</Form.Label>
               <InputGroup className="mb-3" ref={ref}>
@@ -96,6 +97,7 @@ export default function JoinCallForm({ onJoin = () => {} }) {
                 </Overlay>
               </InputGroup>
             </Form.Group>
+            */}
             <Button
               variant="primary"
               type="submit"
