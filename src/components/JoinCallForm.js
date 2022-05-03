@@ -9,8 +9,11 @@ import InputGroup from "react-bootstrap/InputGroup";
 import Overlay from "react-bootstrap/esm/Overlay";
 import Popover from "react-bootstrap/Popover";
 
+import { useSlackUsers } from "../integrations/slack"
+
 export default function JoinCallForm({ onJoin = () => {} }) {
-  let [name, setName] = useState("");
+  const slackUsers = useSlackUsers();
+  const [selectedUser, setSelectedUser] = useState(null)
   let [room, setRoom] = useState(CONST.default_token);
   let [showHelp, setShowHelp] = useState(false);
   let ref = useRef(null);
@@ -40,13 +43,13 @@ export default function JoinCallForm({ onJoin = () => {} }) {
           <Form onSubmit={(e) => e.preventDefault()}>
             <Form.Group className="mb-3" controlId="VideoCallName">
               <Form.Label>Your Name</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Your Name"
-                onChange={(e) => setName(e.target.value)}
-                value={name}
-                pattern="[^' ']+"
-              />
+              <Form.Select
+                aria-label="Your Name"
+                value={selectedUser?.id}
+                onChange={(e) => setSelectedUser(slackUsers.find(u => u.id === e.target.value))}>
+                  <option>Select your name</option>
+                  {slackUsers.map(u => <option key={u.id} value={u.id}>{u.real_name}</option>)}
+              </Form.Select>
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="VideoRoom">
@@ -97,8 +100,8 @@ export default function JoinCallForm({ onJoin = () => {} }) {
               variant="primary"
               type="submit"
               onClick={() => {
-                if (name !== "" && room !== "") {
-                  onJoin({ name, room });
+                if (selectedUser && room !== "") {
+                  onJoin({ user: selectedUser, room });
                 } else {
                   alert("Please fill all fields.");
                 }

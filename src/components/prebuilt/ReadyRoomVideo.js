@@ -90,37 +90,9 @@ export default function Video({
           console.log(memberList.current);
         });
 
-        let layouts = (await roomSession.getLayouts()).layouts;
-        let cameras = await SignalWire.WebRTC.getCameraDevicesWithPermissions();
-        let microphones =
-          await SignalWire.WebRTC.getMicrophoneDevicesWithPermissions();
-        let speakers =
-          await SignalWire.WebRTC.getSpeakerDevicesWithPermissions();
-
         setIsLoading(false);
-        onRoomInit(roomSession, layouts, cameras, microphones, speakers);
+        onRoomInit(roomSession);
 
-        let camChangeWatcher = await SignalWire.WebRTC.createDeviceWatcher({
-          targets: ["camera"],
-        });
-        camChangeWatcher.on("changed", (changes) => {
-          eventLogger("The list of camera devices has changed");
-          onRoomUpdate({ cameras: changes.devices });
-        });
-        let micChangeWatcher = await SignalWire.WebRTC.createDeviceWatcher({
-          targets: ["microphone"],
-        });
-        micChangeWatcher.on("changed", (changes) => {
-          eventLogger("The list of microphone devices has changed");
-          onRoomUpdate({ microphones: changes.devices });
-        });
-        let speakerChangeWatcher = await SignalWire.WebRTC.createDeviceWatcher({
-          targets: ["speaker"],
-        });
-        speakerChangeWatcher.on("changed", (changes) => {
-          eventLogger("The list of speakers has changed");
-          onRoomUpdate({ speakers: changes.devices });
-        });
       });
     }
   }, [roomSession, onMemberListUpdate, onRoomInit, onRoomUpdate]);

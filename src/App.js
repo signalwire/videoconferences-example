@@ -28,7 +28,7 @@ function App() {
       <Header />
       <Switch>
         <Route path="/prebuilt">
-          {roomDetails.name === undefined || roomDetails.room === undefined ? (
+          {!roomDetails.user || !roomDetails.room ? (
             <Redirect to="/" />
           ) : (
             <Prebuilt roomDetails={roomDetails} />
@@ -50,9 +50,9 @@ function App() {
         </Route>
         <Route path="/">
           <JoinCallForm
-            onJoin={({ room, name }) => {
-              console.log(name, room);
-              setRoomDetails({ name, room, mod: true });
+            onJoin={({ room, user }) => {
+              console.log(user, room);
+              setRoomDetails({ user, room, mod: true });
               console.log(history);
               history.push("/prebuilt");
             }}

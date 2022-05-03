@@ -10,7 +10,7 @@ export default function Header() {
     <>
       <Navbar>
         <Container>
-          <Navbar.Brand href="https://signalwire.com">
+          <Navbar.Brand href="/">
             <img
               src="/swlogo.png"
               className="d-inline-block align-top"
