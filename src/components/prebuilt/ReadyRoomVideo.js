@@ -12,8 +12,6 @@ export default function Video({
   onMemberListUpdate = () => {},
   joinDetails,
 }) {
-  let [isLoading, setIsLoading] = useState("true");
-  let [setupDone, setSetupDone] = useState(false);
   let thisMemberId = useRef(null);
   let memberList = useRef([]);
 
@@ -97,7 +95,6 @@ export default function Video({
         let speakers =
           await SignalWire.WebRTC.getSpeakerDevicesWithPermissions();
 
-        setIsLoading(false);
         onRoomInit(roomSession, layouts, cameras, microphones, speakers);
 
         let camChangeWatcher = await SignalWire.WebRTC.createDeviceWatcher({

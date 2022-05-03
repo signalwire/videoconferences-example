@@ -30,7 +30,7 @@ export default function Events({ log = {} }) {
           key={l.index}
           autohide
           delay={4000}
-          onClose={(e) => {
+          onClose={() => {
             console.log("Closing Event index", l.index);
             setLogQueue((logQueue) =>
               logQueue.filter((m) => m.index !== l.index)

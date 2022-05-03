@@ -17,7 +17,7 @@ export default function JoinCallForm({ onJoin = () => {} }) {
   const [helpTarget, setHelpTarget] = useState(null);
   const handleHelpClick = (e) => {
     setShowHelp(!showHelp);
-    setHelpTarget(event.target);
+    setHelpTarget(e.target);
   };
 
   useEffect(() => {

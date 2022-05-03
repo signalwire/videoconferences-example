@@ -7,7 +7,6 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Events from "../Events";
 import InviteButton from "../Invite.js";
-// import Participants from "../Partcipants.js";
 import Participants from "../Participants";
 import NavBar from "react-bootstrap/Navbar";
 import ReadyRoomVideo from "./ReadyRoomVideo";
@@ -30,11 +29,7 @@ function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
-export default function InCall({
-  roomDetails,
-  space,
-  setRoomDetails = () => {},
-}) {
+export default function InCall({ roomDetails, setRoomDetails = () => {} }) {
   let history = useHistory();
   let [layouts, setLayouts] = useState([]);
   let [curLayout, setCurLayout] = useState();
@@ -110,16 +105,9 @@ export default function InCall({
     if (roomDetails === undefined) {
       let r = query.get("r");
       let n = query.get("u");
-      let mod = query.get("mod");
-      console.log(r, n, mod, "on join");
-      setRoomDetails({ room: r, name: n, mod: mod === "true" });
+      setRoomDetails({ room: r, name: n });
     }
   }, [location, query, history, roomDetails, setRoomDetails]);
-
-  useEffect(() => {
-    console.log("This is memberlist which has been updated", memberList);
-    memberList.forEach((member) => {});
-  }, [memberList]);
 
   return (
     <>
@@ -145,8 +133,9 @@ export default function InCall({
           </Col>
           <Col className="col">
             <Participants
-              memberList={memberList}
-              mod={true}
+              memberList={memberList?.sort((x, y) =>
+                x.name.localeCompare(y.name)
+              )}
               onMemberUpdate={async (event) => {
                 if (room !== undefined && room === {}) return;
                 if (event.action === "remove") {
@@ -269,7 +258,6 @@ export default function InCall({
             <Col xs="auto" style={{ marginTop: 5 }}>
               <InviteButton
                 staticURL={window.location.href}
-                mod={true}
                 room={roomDetails.room}
                 roomName={roomDisplayName}
                 eventLogger={logEvent}

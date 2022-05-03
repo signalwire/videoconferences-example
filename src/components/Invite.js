@@ -4,23 +4,20 @@ import Dropdown from "react-bootstrap/Dropdown";
 export default function InviteButton({
   room = "room",
   roomName = "Room",
-  mod,
   eventLogger = (msg) => {
     console.log("InviteEvent", msg);
   },
 }) {
   function generateLink(r, type = "normal") {
-    if (type === "normal")
-      return (
-        window.location.protocol +
-        "//" +
-        window.location.host +
-        "/invite?r=" +
-        r +
-        "&rn=" +
-        roomName
-      );
-    else if (type === "mod") return generateLink(r) + "&m=mod";
+    return (
+      window.location.protocol +
+      "//" +
+      window.location.host +
+      "/invite?r=" +
+      r +
+      "&rn=" +
+      roomName
+    );
   }
 
   return (
@@ -44,7 +41,6 @@ export default function InviteButton({
               tx.select();
               document.execCommand("copy");
               document.body.removeChild(tx);
-              // setShowCopiedToast(true);
               eventLogger(
                 "The link " +
                   generateLink(room, "mod") +

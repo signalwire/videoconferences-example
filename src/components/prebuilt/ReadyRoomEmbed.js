@@ -30,7 +30,6 @@ export default function ReadyRoomEmbed({
   }(window,document);
 
   SignalWire.Prebuilt.VideoRoom({
-    // token: 'vpt_22bd83e329d34a2ccd083fe90b0dadfd',
     token: '${token}',
     userName: '${user}',
      setupRoomSession: (rs)=>{

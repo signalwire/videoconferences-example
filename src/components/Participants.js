@@ -19,18 +19,7 @@ import Col from "react-bootstrap/Col";
 export default function Participants({
   memberList,
   onMemberUpdate = () => {},
-  mod = false,
 }) {
-  if (!mod)
-    return (
-      <Card>
-        <Card.Header>Participants</Card.Header>
-        {memberList.map((member) => (
-          <ListGroup.Item key={member.id}>{member.name + " "}</ListGroup.Item>
-        ))}
-      </Card>
-    );
-
   return (
     <Card style={{ width: "100%" }}>
       <Card.Header>Participants</Card.Header>

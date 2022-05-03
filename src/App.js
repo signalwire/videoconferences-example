@@ -12,7 +12,7 @@ import {
 
 import JoinCallForm from "./components/JoinCallForm.js";
 import InviteForm from "./components/InviteForm";
-import Prebuilt from "./components/prebuilt/PrebuiltInCall.js";
+import Prebuilt from "./components/prebuilt/ReadyRoomCall.js";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
