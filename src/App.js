@@ -11,7 +11,7 @@ import {
 } from "react-router-dom";
 
 import JoinCallForm from "./components/JoinCallForm.js";
-import Prebuilt from "./components/prebuilt/PrebuiltInCall.js";
+import Prebuilt from "./components/video/PrebuiltInCall.js";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
