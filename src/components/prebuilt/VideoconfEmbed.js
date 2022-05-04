@@ -1,11 +1,11 @@
 import { useEffect, useRef } from "react";
 
-export default function ReadyRoomEmbed({
+export default function VideoconfEmbed({
   onRoomReady = () => {},
   token,
   user,
 }) {
-  let container = useRef(null);
+  const container = useRef(null);
 
   window.setupRoomSession = (rs) => {
     onRoomReady(rs);
@@ -13,9 +13,9 @@ export default function ReadyRoomEmbed({
 
   useEffect(() => {
     if (container.current === null) return;
-    console.log("CALLED");
-    let c = container.current;
-    let script = document.createElement("script");
+
+    const c = container.current;
+    const script = document.createElement("script");
     script.innerHTML = `
   !function(e,r){e.swvr=e.swvr||function(r={}){
   Object.assign(e.swvr.p=e.swvr.p||{},r)}
@@ -41,8 +41,12 @@ export default function ReadyRoomEmbed({
 
     c.appendChild(script);
     return () => {
-      c.removeChild(script);
+      c.innerHTML = '';
     };
   }, []);
-  return <div ref={container}></div>;
+  return <div ref={container} style={{
+    maxHeight: 'calc(100vh - 90px)',
+    aspectRatio: '16 / 9',
+    flex: 1
+  }}></div>;
 }

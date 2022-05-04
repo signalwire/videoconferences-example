@@ -12,7 +12,7 @@ export default function InviteForm({ currentUser }) {
 
   return (
     <Form onSubmit={(e) => e.preventDefault()}>
-      <Form.Group className="mb-3" controlId="VideoCallName">
+      <Form.Group className="mb-3">
         <Form.Label>Invite someone</Form.Label>
         <Form.Select
           aria-label="User name"
