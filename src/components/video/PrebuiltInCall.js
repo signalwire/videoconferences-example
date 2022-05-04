@@ -19,7 +19,6 @@ export default function InCall({
   let [event, setEvent] = useState(null);
 
   let logEvent = useCallback((msg, title, variant) => {
-    console.log("Displaying toast for", msg, title, variant);
     setEvent({ text: msg, title, variant });
   }, []);
 

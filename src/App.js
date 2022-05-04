@@ -37,9 +37,7 @@ function App() {
         <Route path="/">
           <JoinCallForm
             onJoin={({ room, user }) => {
-              console.log(user, room);
               setRoomDetails({ user, room, mod: true });
-              console.log(history);
               history.push("/videoconf");
             }}
           />

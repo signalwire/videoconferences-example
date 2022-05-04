@@ -40,7 +40,6 @@ export async function sendMessage(channelId, message) {
         throw new Error(`SLACK: Server error ${res.status}`);
     }
 
-    console.log(res)
     return res.json();
 }
 

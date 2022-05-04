@@ -7,7 +7,6 @@ export default function Events({ log = {} }) {
   let counter = useRef(0);
   useEffect(() => {
     if (log === null) return;
-    console.log("Got log ", log);
     setLogQueue((l) => [
       ...l,
       {
@@ -31,7 +30,6 @@ export default function Events({ log = {} }) {
           autohide
           delay={4000}
           onClose={(e) => {
-            console.log("Closing Event index", l.index);
             setLogQueue((logQueue) =>
               logQueue.filter((m) => m.index !== l.index)
             );
